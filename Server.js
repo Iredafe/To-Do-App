@@ -10,6 +10,12 @@ that it can be access from anywhere in our code */
 
 let db
 
+let port = process.env.PORT
+if(port==null||port==""){
+
+  port = 3000
+}
+
 app.use(express.static('public'))
 
 //take data and add it to the body object for asynchronous requests
@@ -25,7 +31,7 @@ let connectionString= 'mongodb+srv://user:user100@cluster0-wvo6k.mongodb.net/Try
 mongodb.connect(connectionString, {useUnifiedTopology: true , useNewUrlParser: true}, function(err, client){
     db = client.db()
     // connect to the server with port number:3000
-    app.listen(3000)
+    app.listen(port)
 })
 
 //security
