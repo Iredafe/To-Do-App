@@ -28,6 +28,23 @@ mongodb.connect(connectionString, {useUnifiedTopology: true , useNewUrlParser: t
     app.listen(3000)
 })
 
+//security
+
+function passwordProtected(req, res, next){
+  res.set('WWW-Authenticate','Basic realm="Simple To-Do App"')
+  console.log(req.headers.authorization) 
+  if(req.headers.authorization == "Basic bG92ZTpjb2Rpbmc="){
+  next()
+  
+   } else{
+  res.status(401).send("Authentication Required")
+   }
+  }
+  
+  //add security (username and password) to all urls
+  
+  app.use(passwordProtected)
+  
 // send a get request to display the html page and get
 app.get('/', function(req, res){
   // fetch the items from the database and pass it into server response to user's get request
